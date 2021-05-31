@@ -514,7 +514,7 @@ public class CordovaFragment extends Fragment {
                 e.printStackTrace();
             }
         } else if ("exit".equals(id)) {
-//            getActivity().finish();
+            getActivity().finish();
         }
         return null;
     }
