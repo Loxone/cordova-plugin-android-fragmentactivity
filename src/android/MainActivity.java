@@ -22,9 +22,11 @@ package ${mypackage};
 /** extends CordovaActivity */
 
 import android.annotation.SuppressLint;
+import android.app.KeyguardManager;
+import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -42,6 +44,11 @@ public class MainActivity extends FragmentActivity
 
         super.onCreate(savedInstanceState);
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            KeyguardManager keyguardManager = (KeyguardManager) this.getApplicationContext().getSystemService(Context.KEYGUARD_SERVICE);
+            keyguardManager.requestDismissKeyguard(this, null);
+        }
+
         if (!this.isTaskRoot()) {
             finish();
             return;
@@ -49,12 +56,12 @@ public class MainActivity extends FragmentActivity
 
         FragmentManager fm = getSupportFragmentManager();
 
-        currentFragment = (uk.co.reallysmall.cordova.plugin.fragment.CordovaFragment) fm.findFragmentByTag("${mypackage}");
+        currentFragment = (uk.co.reallysmall.cordova.plugin.fragment.CordovaFragment) fm.findFragmentByTag("com.loxone.kerberos");
 
         if (currentFragment == null) {
             currentFragment = new uk.co.reallysmall.cordova.plugin.fragment.CordovaFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(android.R.id.content, currentFragment,"${mypackage}");
+            ft.add(android.R.id.content, currentFragment,"com.loxone.kerberos");
             ft.commit();
         }
     }
